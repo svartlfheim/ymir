@@ -1,0 +1,72 @@
+{
+    "modules": [
+     {
+      "id": "ddf16817-25b4-48ba-9432-9dae0e555006",
+      "name": "mod-1",
+      "namespace": "akirk",
+      "provider": "aws"
+     },
+     {
+      "id": "d582c8f7-7c53-45e2-9ccd-26a17101b098",
+      "name": "mod-2",
+      "namespace": "akirk",
+      "provider": "aws"
+     },
+     {
+      "id": "278139c2-83a5-454c-8453-f6cd5544d430",
+      "name": "mod-2",
+      "namespace": "akira",
+      "provider": "aws"
+     }
+    ],
+    "module_versions": [
+     {
+      "id": "f2344218-6f54-4bde-80b1-8e6780809a0a",
+      "version": "1.0.0",
+      "module_id": "ddf16817-25b4-48ba-9432-9dae0e555006",
+      "source": "somehash",
+      "downloadURL": "https://ymir.local/dl/akirk/aws/mod-1/1.0.0.tar.gz",
+      "repositoryURL": "https://github.com/myorg/myrepo"
+     },
+     {
+      "id": "2f65ccca-8d57-41e6-bac2-98bcbb8547b5",
+      "version": "1.0.1",
+      "module_id": "ddf16817-25b4-48ba-9432-9dae0e555006",
+      "source": "somehash",
+      "downloadURL": "https://ymir.local/dl/akirk/aws/mod-1/1.0.1.tar.gz",
+      "repositoryURL": "https://github.com/myorg/myrepo"
+     },
+     {
+      "id": "7315be0c-160a-43b0-b1cc-ddf21af4abe9",
+      "version": "1.1.0",
+      "module_id": "ddf16817-25b4-48ba-9432-9dae0e555006",
+      "source": "somehash",
+      "downloadURL": "https://ymir.local/dl/akirk/aws/mod-1/1.1.0.tar.gz",
+      "repositoryURL": "https://github.com/myorg/myrepo"
+     },
+     {
+      "id": "f430a763-c234-43db-aa41-ab2967e1d7bd",
+      "version": "1.0.0",
+      "module_id": "d582c8f7-7c53-45e2-9ccd-26a17101b098",
+      "source": "somehash",
+      "downloadURL": "https://ymir.local/dl/akirk/aws/mod-2/1.0.0.tar.gz",
+      "repositoryURL": "https://github.com/myorg/myrepo"
+     },
+     {
+      "id": "539d2271-862b-4cdc-9234-53f8bf84bb3d",
+      "version": "2.0.0",
+      "module_id": "d582c8f7-7c53-45e2-9ccd-26a17101b098",
+      "source": "somehash",
+      "downloadURL": "https://ymir.local/dl/akirk/aws/mod-2/2.0.0.tar.gz",
+      "repositoryURL": "https://github.com/myorg/myrepo"
+     },
+     {
+      "id": "51ff4fbf-fd6b-4521-b8ad-16fb89a36b7c",
+      "version": "2.0.1",
+      "module_id": "d582c8f7-7c53-45e2-9ccd-26a17101b098",
+      "source": "somehash",
+      "downloadURL": "https://ymir.local/dl/akirk/aws/mod-2/2.0.1.tar.gz",
+      "repositoryURL": "https://github.com/myorg/myrepo"
+     }
+    ]
+   }

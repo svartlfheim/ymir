@@ -1,0 +1,101 @@
+version: '3.5'
+
+services:
+  localstack:
+    container_name: "${LOCALSTACK_DOCKER_NAME-localstack_main}"
+    image: localstack/localstack-full
+    ports:
+      - "4566:4566"
+      - "4571:4571"
+      - "${LOCALSTACK_WEB_UI-8080}:${LOCALSTACK_WEB_UI-8080}"
+    environment:
+      - SERVICES=${SERVICES- }
+      - DEBUG=${DEBUG- }
+      - DATA_DIR=${DATA_DIR- }
+      - PORT_WEB_UI=${LOCALSTACK_WEB_UI-8080}
+      - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
+      - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - HOST_TMP_FOLDER=${TMPDIR}
+    volumes:
+      - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  reverse-proxy:
+    image: traefik:v2.1
+    networks:
+      default:
+        aliases:
+          - ymir.local
+    ports:
+      - "7777:7777"
+      - "443:443"
+      # The Web UI (enabled by --api.insecure=true)
+      - "8080:8080"
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./traefik/traefik.yaml:/traefik.yaml
+      - ./traefik/traefik-dynamic-config.yaml:/traefik-dynamic-config.yaml
+      - ./certs:/certs
+
+  tf:
+    build:
+      context: "./tf"
+    entrypoint: "/bin/sh"
+    working_dir: /app/tf
+    volumes:
+      - "../.tf:/app/tf"
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_PASSWORD: iampostgres
+      POSTGRES_USER: postgres
+    volumes: 
+      - ../.storage/postgres:/var/lib/postgresql/data
+      - ../.docker/postgres/init:/docker-entrypoint-initdb.d
+
+  ymir:
+    build:
+      context: ../
+      target: hot-reload
+    working_dir: /go/src/app-dev
+    # ports:
+    #   - "8081:8080"
+    environment:
+      YMIR_CONFIG_FILE: /go/src/app-dev/ymir.yaml
+      # This value could be a bit flakey
+      # If the project name changes, this is probably wrong
+      YMIR_CI_DOCKER_NETWORK: "ymir_dev_default"
+      GO_CDAEMON_CMD: "ymir serve"
+      BUILD_HASH: "local"
+      BUILD_VERSION: "local"
+    volumes:
+      - ../:/go/src/app-dev
+      - ../.storage:/opt/ymir_storage
+      # We mount this so we can dockertest for integration testing
+      - /var/run/docker.sock:/var/run/docker.sock
+    labels:
+      - "traefik.http.routers.ymir.rule=Host(`ymir.local`)"
+      - "traefik.enable=true"
+      - "traefik.http.routers.ymir.entrypoints=web"
+      - "traefik.http.services.ymir.loadbalancer.server.port=8080"
+      - "traefik.http.routers.ymir.tls=true"
+
+  pgadmin:
+    image: dpage/pgadmin4
+    # runs on port 80
+    ports:
+      - "8989:80"
+    environment:
+      PGADMIN_DEFAULT_EMAIL: postgres@ymir.local
+      PGADMIN_DEFAULT_PASSWORD: iampgadmin
+    volumes:
+      - "../.docker/pgadmin/servers.json:/pgadmin4/servers.json"
+    labels:
+      - "traefik.http.routers.pgadmin.rule=Host(`pgadmin.ymir.local`)"
+      - "traefik.enable=true"
+      - "traefik.http.routers.pgadmin.entrypoints=web"
+      - "traefik.http.services.pgadmin.loadbalancer.server.port=80"
+      - "traefik.http.routers.pgadmin.tls=true"
