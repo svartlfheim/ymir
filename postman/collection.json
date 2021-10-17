@@ -1,0 +1,119 @@
+{
+	"info": {
+		"_postman_id": "17dc83b7-2167-420f-a488-eb22c952a8be",
+		"name": "Ymir",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Module registry protocol",
+			"item": [
+				{
+					"name": "Service discovery (.well-known)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}/.well-known/terraform.json",
+							"host": [
+								"{{HOST}}"
+							],
+							"path": [
+								".well-known",
+								"terraform.json"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Download Module Version",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{MODULE_PROTOCOL_PREFIX}}/:namespace/:name/:provider/:version/download",
+							"host": [
+								"{{HOST}}{{MODULE_PROTOCOL_PREFIX}}"
+							],
+							"path": [
+								":namespace",
+								":name",
+								":provider",
+								":version",
+								"download"
+							],
+							"variable": [
+								{
+									"key": "namespace",
+									"value": "akirk"
+								},
+								{
+									"key": "name",
+									"value": "tf-ymir-mod-1"
+								},
+								{
+									"key": "provider",
+									"value": "aws"
+								},
+								{
+									"key": "version",
+									"value": "1.0.0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List Module Versions",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{HOST}}{{MODULE_PROTOCOL_PREFIX}}/:namespace/:name/:provider/versions",
+							"host": [
+								"{{HOST}}{{MODULE_PROTOCOL_PREFIX}}"
+							],
+							"path": [
+								":namespace",
+								":name",
+								":provider",
+								"versions"
+							],
+							"variable": [
+								{
+									"key": "namespace",
+									"value": "akirk"
+								},
+								{
+									"key": "name",
+									"value": "tf-ymir-mod-1"
+								},
+								{
+									"key": "provider",
+									"value": "aws"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Home",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{HOST}}",
+					"host": [
+						"{{HOST}}"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,36 @@
+## See .env for overrides
+server:
+  port: 8080
+
+# git:
+#   github:
+#     access_token: "" # defined in env
+
+storage:
+  driver: "inmemory"
+  # driver: "fs"
+  # driver: "s3"
+  # driver: "postgres"
+  locking:
+    enabled: true
+    identifier: "local"
+  options:
+    fs:
+      path: /opt/ymir_storage/ymir.json
+
+db:
+  driver: "postgres"
+  # driver: "fs"
+  # driver: "postgres"
+  options:
+    fs:
+      path: /opt/ymir_storage/fs/ymir.json
+    postgres:
+      migrator_user: "ymir_migrator"
+      migrator_password: "iammigrator"
+      user: "ymir_app"
+      password: "iamapp"
+      db: "postgres"
+      schema: "ymir"
+      host: "postgres"
+      port: "5432"

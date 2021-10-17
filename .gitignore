@@ -1,3 +1,4 @@
+## Generic go gitignore
 # Binaries for programs and plugins
 *.exe
 *.exe~
@@ -13,3 +14,19 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+## Ymir specific
+
+.env
+
+.tf/.terraform
+.tf/*.tfplan
+
+# Ignore everything about the state, as it is only use= for testing in localstack
+.tf/terraform.tfstate.backup
+.tf/terraform.tfstate
+.tf/.terraform.lock.hcl
+
+.storage/fs/ymir.json
+
+.storage/postgres

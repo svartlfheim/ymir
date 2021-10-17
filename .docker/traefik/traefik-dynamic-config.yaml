@@ -1,0 +1,8 @@
+tls:
+  stores:
+    default: {}
+  certificates:
+    - certFile: /certs/ymir.local/cert.pem
+      keyFile: /certs/ymir.local/key.pem
+    - certFile: /certs/pgadmin.ymir.local/cert.pem
+      keyFile: /certs/pgadmin.ymir.local/key.pem

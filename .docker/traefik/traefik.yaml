@@ -1,0 +1,22 @@
+api:
+  insecure: true
+
+log:
+  level: DEBUG
+
+providers:
+  docker:
+    exposedByDefault: false
+  file:
+    filename: /traefik-dynamic-config.yaml
+
+entrypoints:
+  web:
+    address: ":443"
+  grpc-api:
+    address: ":7777"
+
+accessLog: {}
+
+serversTransport:
+  insecureSkipVerify: true
